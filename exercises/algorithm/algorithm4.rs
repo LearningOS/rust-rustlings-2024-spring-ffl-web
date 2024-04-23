@@ -55,8 +55,7 @@ where
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        //TODO
-        true
+       self.root.as_ref().map_or(false,|root| root.serach(value))
     }
 }
 
@@ -68,6 +67,18 @@ where
     fn insert(&mut self, value: T) {
         //TODO
     }
+
+    fn search(&self, value: T) -> bool {
+        match value.cmp(&self.value) {
+            Ordering::Less => self.left.as_ref().map_or(false, |left| left.search(value)),
+            Ordering::Greater  => self
+                .right
+                .as_ref()
+                .map_or(false, |right| right.search(value)),
+            _ => true,
+        }
+    }
+
 }
 
 
@@ -78,18 +89,14 @@ mod tests {
     #[test]
     fn test_insert_and_search() {
         let mut bst = BinarySearchTree::new();
-
-        
         assert_eq!(bst.search(1), false);
 
-        
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
         bst.insert(2);
         bst.insert(4);
 
-        
         assert_eq!(bst.search(5), true);
         assert_eq!(bst.search(3), true);
         assert_eq!(bst.search(7), true);

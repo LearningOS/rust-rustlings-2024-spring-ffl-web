@@ -2,7 +2,7 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
+
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -43,7 +43,8 @@ impl<T> LinkedList<T> {
             end: None,
         }
     }
-
+}
+impl<T: PartialOrd + Clone + std::cmp::PartialOrd > LinkedList<T> {
     pub fn add(&mut self, obj: T) {
         let mut node = Box::new(Node::new(obj));
         node.next = None;
@@ -71,7 +72,45 @@ impl<T> LinkedList<T> {
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
 	{
-		
+        let mut merged_list=LinkedList::new();
+		let mut a_current=list_a.start;
+        let mut b_current=list_b.start;
+        //is_some()是一个Option类型的方法，用于检查Option类型的值是否包含Some值。
+        while a_current.is_some() || b_current.is_some()
+        {
+            //unsafe { &(*ptr.as_ptr()).val }它尝试解引用指针ptr，然后获取指针所指向的结构体中的val字段的引用。
+            let a_next_val=a_current.map(|ptr| unsafe{&(*ptr.as_ptr()).val});
+            let b_next_val=b_current.map(|ptr| unsafe{&(*ptr.as_ptr()).val});
+
+            match (a_next_val,b_next_val)
+            {
+                (Some(a_val),Some(b_val)) =>
+                {
+                    if a_val<=b_val
+                    {
+                        merged_list.add(a_val.clone());
+                        a_current=unsafe{(*a_current.unwrap().as_ptr()).next};
+                    }
+                    else {
+                        merged_list.add(b_val.clone());
+                        b_current = unsafe { (*b_current.unwrap().as_ptr()).next };
+                    }
+
+                }
+                (Some(a_val),None) =>
+                {
+                    merged_list.add(a_val.clone());
+                    a_current=unsafe{(*a_current.unwrap().as_ptr()).next}
+                }
+                (None, Some(b_val)) => {
+                    merged_list.add(b_val.clone());
+                    b_current = unsafe { (*b_current.unwrap().as_ptr()).next };
+                },
+                (None, None) => break,
+
+            }
+        }
+        merged_list
 	}
 }
 
