@@ -27,14 +27,18 @@
 //
 // You should NOT modify any existing code except for adding two lines of attributes.
 
-// I AM NOT DONE
+
 
 extern "Rust" {
+   // #[no_mangle]//#[no_mangle]：这是一个属性（attribute），指示编译器不对函数名进行修饰（mangle），即保持函数名不变，以便在Rust代码和其他语言（如C语言）中使用相同的函数名。
     fn my_demo_function(a: u32) -> u32;
+  //  #[no_mangle]
+    #[link_name="my_demo_function"]//这是一个属性，指定了在链接时使用的函数名。这个属性告诉编译器在链接时将函数名映射为my_demo_function，而不是默认的Rust函数名。
     fn my_demo_function_alias(a: u32) -> u32;
 }
 
 mod Foo {
+    #[no_mangle]
     // No `extern` equals `extern "Rust"`.
     fn my_demo_function(a: u32) -> u32 {
         a

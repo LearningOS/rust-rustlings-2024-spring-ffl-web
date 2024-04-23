@@ -7,26 +7,34 @@
 // Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 // Obtain the number of bytes (not characters) in the given argument.
 // TODO: Add the AsRef trait appropriately as a trait bound.
-fn byte_counter<T>(arg: T) -> usize {
+fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().as_bytes().len()
 }
 
 // Obtain the number of characters (not bytes) in the given argument.
 // TODO: Add the AsRef trait appropriately as a trait bound.
-fn char_counter<T>(arg: T) -> usize {
+fn char_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().chars().count()
 }
 
 // Squares a number using as_mut().
 // TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
+fn num_sq<T: AsMut<u32>>(arg: &mut T) {
     // TODO: Implement the function body.
-    ???
+    let val=arg.as_mut();
+    *val=*val * *val
 }
+
+/*
+`AsMut`和`AsRef`是Rust中的两个trait，用于实现类型转换。它们可以将一个类型转换为另一个类型的引用。
+- `AsMut` trait表示可以将类型转换为可变引用。它定义了一个方法`as_mut(&mut self) -> &mut U`，该方法将自身类型转换为另一种可变引用类型`U`。
+- `AsRef` trait表示可以将类型转换为不可变引用。它定义了一个方法`as_ref(&self) -> &U`，该方法将自身类型转换为另一种不可变引用类型`U`。
+
+*/
 
 #[cfg(test)]
 mod tests {

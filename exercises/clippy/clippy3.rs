@@ -9,9 +9,16 @@
 #[allow(unused_variables, unused_assignments)]
 fn main() {
     let my_option: Option<()> = None;
-    if my_option.is_none() {
-        my_option.unwrap();
+    match my_option
+    {
+        Some(_) => {
+            println!("Option contains a value!");
+        }
+        None => {
+            println!("Option is empty!");
+        }
     }
+    
 
     let my_arr = &[
         -1, -2, -3,

@@ -22,7 +22,7 @@
 // Execute `rustlings hint tests5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 /// # Safety
 ///
@@ -31,9 +31,14 @@ unsafe fn modify_by_address(address: usize) {
     // TODO: Fill your safety notice of the code block below to match your
     // code's behavior and the contract of this function. You may use the
     // comment of the test below as your format reference.
-    unsafe {
-        todo!("Your code goes here")
-    }
+    // unsafe {
+    //     todo!("Your code goes here")
+    // }
+
+   let a =address as *mut u32;//将address转换为一个指向u32类型的可变指针，并将其赋值给变量a。这样，变量a就指向了一个u32类型的内存地址。
+   let b= &mut *a;//通过*a解引用指针a，获取指针指向的值，然后使用&mut创建了一个对该值的可变引用，并将其赋值给变量b。这样，变量b就成为了指向u32类型值的可变引用。
+   *b=0xAABBCCDD;
+
 }
 
 #[cfg(test)]
